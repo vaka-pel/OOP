@@ -21,7 +21,8 @@ namespace Calculator
 		{
 			Console.Write("Введите арифметическое выражение: ");
 			//string expression = "22+33-44/2+8*3";
-			expression = "22+33-44/2+8*3+1";
+			expression = "5 + (1 + (2 + (22 + 3) * 2 + (33 - 44))/(2 +8 ) * 3 + 1) * 2 - 2";
+			//expression = "22+33-44/2+8*3+1";
 			//string expression = Console.ReadLine();
 			expression = expression.Replace(".", ",");
 			expression = expression.Replace(" ", "");
@@ -44,12 +45,39 @@ namespace Calculator
 
 			operations = expression.Split(digits);
 			operations = operations.Where(operation => operation != "").ToArray();  //LINQ
-			for (int i = 0; i < operations.Length; i++)
+			/*for (int i = 0; i < operations.Length; i++)
 			{
 				Console.Write($"{operations[i]}\t");
 			}
-			Console.WriteLine();
+			Console.WriteLine();*/
 
+			Console.WriteLine(Calculate (expression));
+
+
+#if CALC_IF
+			if (expression.Contains("+"))
+				Console.WriteLine($"{values[0]} + {values[1]} = {values[0] + values[1]}");
+			else if (expression.Contains("-"))
+				Console.WriteLine($"{values[0]} - {values[1]} = {values[0] - values[1]}");
+			else if (expression.Contains("*"))
+				Console.WriteLine($"{values[0]} * {values[1]} = {values[0] * values[1]}");
+			else if (expression.Contains("/"))
+				Console.WriteLine($"{values[0]} / {values[1]} = {values[0] / values[1]}");
+			else Console.WriteLine("Error: No operation"); 
+#endif
+
+#if CALC_SWITCH
+			switch (expression[expression.IndexOfAny(operators)])
+			{
+				case '+': Console.WriteLine($"{values[0]} + {values[1]} = {values[0] + values[1]}"); break;
+				case '-': Console.WriteLine($"{values[0]} - {values[1]} = {values[0] - values[1]}"); break;
+				case '*': Console.WriteLine($"{values[0]} * {values[1]} = {values[0] * values[1]}"); break;
+				case '/': Console.WriteLine($"{values[0]} / {values[1]} = {values[0] / values[1]}"); break;
+			} 
+#endif
+		}
+		static double Calculate(string expression)
+		{
 			while (operations[0] != "")
 			{
 				//int i = 0;
@@ -74,30 +102,9 @@ namespace Calculator
 					}
 				}
 			}
-			Console.WriteLine(values[0]);
+			//Console.WriteLine(values[0]);
+			return values[0];
 
-
-#if CALC_IF
-			if (expression.Contains("+"))
-				Console.WriteLine($"{values[0]} + {values[1]} = {values[0] + values[1]}");
-			else if (expression.Contains("-"))
-				Console.WriteLine($"{values[0]} - {values[1]} = {values[0] - values[1]}");
-			else if (expression.Contains("*"))
-				Console.WriteLine($"{values[0]} * {values[1]} = {values[0] * values[1]}");
-			else if (expression.Contains("/"))
-				Console.WriteLine($"{values[0]} / {values[1]} = {values[0] / values[1]}");
-			else Console.WriteLine("Error: No operation"); 
-#endif
-
-#if CALC_SWITCH
-			switch (expression[expression.IndexOfAny(operators)])
-			{
-				case '+': Console.WriteLine($"{values[0]} + {values[1]} = {values[0] + values[1]}"); break;
-				case '-': Console.WriteLine($"{values[0]} - {values[1]} = {values[0] - values[1]}"); break;
-				case '*': Console.WriteLine($"{values[0]} * {values[1]} = {values[0] * values[1]}"); break;
-				case '/': Console.WriteLine($"{values[0]} / {values[1]} = {values[0] / values[1]}"); break;
-			} 
-#endif
 		}
 		static void Shift(int index)
 		{
