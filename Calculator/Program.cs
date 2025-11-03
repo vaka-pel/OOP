@@ -14,7 +14,7 @@ namespace Calculator
 		static readonly char[] operators = new char[] { '+', '-', '*', '/' };
 		static string[] operands;
 		static double[] values;
-		static readonly char[] digits = "0123456789.".ToCharArray();
+		static readonly char[] digits = "0123456789.,".ToCharArray();
 		static string[] operations;
 		static void Main(string[] args)
 		{
